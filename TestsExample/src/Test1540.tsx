@@ -56,7 +56,7 @@ const App = () => {
           component={HomeScreen}
           options={
             {
-              // headerShown: false,
+              headerShown: false,
               // headerTitle: 'Home',
             }
           }

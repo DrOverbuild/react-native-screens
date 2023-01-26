@@ -478,6 +478,8 @@
   }
 
   if (shouldHide) {
+    // need to set title to show this screen's title on the next screen's back button and back button menu
+    navitem.title = config.title;
     return;
   }
 
