@@ -323,6 +323,24 @@
   [self updateViewController:vc withConfig:config animated:animated];
 }
 
++ (NSMutableDictionary *)backButtonTitleAttributesWithConfig:(RNSScreenStackHeaderConfig *)config
+{
+  NSMutableDictionary *attrs = [NSMutableDictionary new];
+  NSNumber *size = config.backTitleFontSize ?: @17;
+  if (config.backTitleFontFamily) {
+    attrs[NSFontAttributeName] = [RCTFont updateFont:nil
+                                          withFamily:config.backTitleFontFamily
+                                                size:size
+                                              weight:nil
+                                               style:nil
+                                             variant:nil
+                                     scaleMultiplier:1.0];
+  } else {
+    attrs[NSFontAttributeName] = [UIFont systemFontOfSize:[size floatValue]];
+  }
+  return attrs;
+}
+
 #if defined(__IPHONE_OS_VERSION_MAX_ALLOWED) && defined(__IPHONE_13_0) && \
     __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0
 + (UINavigationBarAppearance *)buildAppearance:(UIViewController *)vc
@@ -402,6 +420,10 @@
     }
 
     appearance.largeTitleTextAttributes = largeAttrs;
+  }
+
+  if (config.backTitleFontFamily || config.backTitleFontSize) {
+    appearance.backButtonAppearance.normal.titleTextAttributes = [self backButtonTitleAttributesWithConfig:config];
   }
 
 #ifdef RN_FABRIC_ENABLED
